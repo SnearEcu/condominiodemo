@@ -20,35 +20,42 @@ public class SegUsuario implements Serializable {
 	@Column(name="id_seg_usuario", unique=true, nullable=false)
 	private Integer idSegUsuario;
 
-	@Column(nullable=false)
 	private Boolean activo;
 
-	@Column(nullable=false, length=50)
+	@Column(length=2147483647)
 	private String apellidos;
 
-	@Column(nullable=false, length=50)
+	@Column(length=2147483647)
 	private String clave;
 
-	@Column(nullable=false, length=10)
+	@Column(length=2147483647)
 	private String codigo;
 
-	@Column(nullable=false, length=50)
+	@Column(length=2147483647)
 	private String correo;
 
-	@Column(nullable=false, length=50)
+	@Column(length=2147483647)
 	private String nombres;
 
-	//bi-directional many-to-one association to PryTarea
+	//bi-directional many-to-one association to Pago
 	@OneToMany(mappedBy="segUsuario")
-	private List<PryTarea> pryTareas;
+	private List<Pago> pagos;
+
+	//bi-directional many-to-one association to Reserva
+	@OneToMany(mappedBy="segUsuario")
+	private List<Reserva> reservas;
 
 	//bi-directional many-to-one association to SegAsignacion
 	@OneToMany(mappedBy="segUsuario")
 	private List<SegAsignacion> segAsignacions;
 
-	//bi-directional many-to-one association to ThmEmpleado
+	//bi-directional many-to-one association to Vehiculo
 	@OneToMany(mappedBy="segUsuario")
-	private List<ThmEmpleado> thmEmpleados;
+	private List<Vehiculo> vehiculos;
+
+	//bi-directional many-to-one association to Vivienda
+	@OneToMany(mappedBy="segUsuario")
+	private List<Vivienda> viviendas;
 
 	public SegUsuario() {
 	}
@@ -109,26 +116,48 @@ public class SegUsuario implements Serializable {
 		this.nombres = nombres;
 	}
 
-	public List<PryTarea> getPryTareas() {
-		return this.pryTareas;
+	public List<Pago> getPagos() {
+		return this.pagos;
 	}
 
-	public void setPryTareas(List<PryTarea> pryTareas) {
-		this.pryTareas = pryTareas;
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
 	}
 
-	public PryTarea addPryTarea(PryTarea pryTarea) {
-		getPryTareas().add(pryTarea);
-		pryTarea.setSegUsuario(this);
+	public Pago addPago(Pago pago) {
+		getPagos().add(pago);
+		pago.setSegUsuario(this);
 
-		return pryTarea;
+		return pago;
 	}
 
-	public PryTarea removePryTarea(PryTarea pryTarea) {
-		getPryTareas().remove(pryTarea);
-		pryTarea.setSegUsuario(null);
+	public Pago removePago(Pago pago) {
+		getPagos().remove(pago);
+		pago.setSegUsuario(null);
 
-		return pryTarea;
+		return pago;
+	}
+
+	public List<Reserva> getReservas() {
+		return this.reservas;
+	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public Reserva addReserva(Reserva reserva) {
+		getReservas().add(reserva);
+		reserva.setSegUsuario(this);
+
+		return reserva;
+	}
+
+	public Reserva removeReserva(Reserva reserva) {
+		getReservas().remove(reserva);
+		reserva.setSegUsuario(null);
+
+		return reserva;
 	}
 
 	public List<SegAsignacion> getSegAsignacions() {
@@ -153,26 +182,48 @@ public class SegUsuario implements Serializable {
 		return segAsignacion;
 	}
 
-	public List<ThmEmpleado> getThmEmpleados() {
-		return this.thmEmpleados;
+	public List<Vehiculo> getVehiculos() {
+		return this.vehiculos;
 	}
 
-	public void setThmEmpleados(List<ThmEmpleado> thmEmpleados) {
-		this.thmEmpleados = thmEmpleados;
+	public void setVehiculos(List<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
 	}
 
-	public ThmEmpleado addThmEmpleado(ThmEmpleado thmEmpleado) {
-		getThmEmpleados().add(thmEmpleado);
-		thmEmpleado.setSegUsuario(this);
+	public Vehiculo addVehiculo(Vehiculo vehiculo) {
+		getVehiculos().add(vehiculo);
+		vehiculo.setSegUsuario(this);
 
-		return thmEmpleado;
+		return vehiculo;
 	}
 
-	public ThmEmpleado removeThmEmpleado(ThmEmpleado thmEmpleado) {
-		getThmEmpleados().remove(thmEmpleado);
-		thmEmpleado.setSegUsuario(null);
+	public Vehiculo removeVehiculo(Vehiculo vehiculo) {
+		getVehiculos().remove(vehiculo);
+		vehiculo.setSegUsuario(null);
 
-		return thmEmpleado;
+		return vehiculo;
+	}
+
+	public List<Vivienda> getViviendas() {
+		return this.viviendas;
+	}
+
+	public void setViviendas(List<Vivienda> viviendas) {
+		this.viviendas = viviendas;
+	}
+
+	public Vivienda addVivienda(Vivienda vivienda) {
+		getViviendas().add(vivienda);
+		vivienda.setSegUsuario(this);
+
+		return vivienda;
+	}
+
+	public Vivienda removeVivienda(Vivienda vivienda) {
+		getViviendas().remove(vivienda);
+		vivienda.setSegUsuario(null);
+
+		return vivienda;
 	}
 
 }

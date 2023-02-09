@@ -21,12 +21,12 @@ public class SegAsignacion implements Serializable {
 
 	//bi-directional many-to-one association to SegPerfil
 	@ManyToOne
-	@JoinColumn(name="id_seg_perfil", nullable=false)
+	@JoinColumn(name="id_seg_perfil")
 	private SegPerfil segPerfil;
 
 	//bi-directional many-to-one association to SegUsuario
 	@ManyToOne
-	@JoinColumn(name="id_seg_usuario", nullable=false)
+	@JoinColumn(name="id_seg_usuario")
 	private SegUsuario segUsuario;
 
 	public SegAsignacion() {
