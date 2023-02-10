@@ -33,7 +33,7 @@ public class Reserva implements Serializable {
 	private Date fechaReserva;
 
 	//bi-directional many-to-one association to Bien
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name="bien_id")
 	private Bien bien;
 

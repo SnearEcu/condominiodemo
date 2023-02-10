@@ -1,5 +1,6 @@
 package minimarketdemo.api.rest.reserva;
 
+
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -9,9 +10,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
-
-import minimarketdemo.model.core.entities.Reserva;
-
+import minimarketdemo.model.reservas.DTOReserva;
 import minimarketdemo.model.reservas.ManagerReservas;
 
 @RequestScoped
@@ -26,7 +25,7 @@ public class ServiceRESTReservas {
 	// /apirest/auditoria/bitacora
 	@GET
 	@Path(value = "reserva")
-	public List<Reserva> findReservas(){
-		return mReserva.findAllReservas();
+	public List<DTOReserva> findDTOReservas(){
+		return mReserva.findAllDTOReservas();
 	}
 }

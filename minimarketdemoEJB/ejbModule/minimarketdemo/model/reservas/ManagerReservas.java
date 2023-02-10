@@ -1,5 +1,6 @@
 package minimarketdemo.model.reservas;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,15 @@ public class ManagerReservas {
     }
     public List<Reserva> findAllReservas(){
     	return mDAO.findAll(Reserva.class);
+    }
+    public List<DTOReserva> findAllDTOReservas(){
+    	List<DTOReserva> listaDTO=new ArrayList<DTOReserva>();
+    	for(Reserva reserva:findAllReservas()) {
+    		DTOReserva nuevoDTO=new DTOReserva(reserva.getResvId(),reserva.getSegUsuario().getNombres()+" "+reserva.getSegUsuario().getApellidos(),
+    		reserva.getBien().getNombreBien(),reserva.getFechaReserva().toString(),reserva.getFechaInicio().toString(),reserva.getFechaFin().toString());
+    		listaDTO.add(nuevoDTO);
+    	}
+    	return listaDTO;
     }
     public Reserva inicializarReserva() {
     	Reserva reserva=new Reserva();
