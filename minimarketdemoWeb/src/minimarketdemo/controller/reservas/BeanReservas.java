@@ -1,6 +1,7 @@
 package minimarketdemo.controller.reservas;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -32,7 +33,8 @@ public class BeanReservas implements Serializable {
 	private Reserva nuevaReserva;
 	private List<Reserva> listaReserva;
 	private List<Reserva> listaReserva2;
-
+	private String bienElegido;
+	private String usuarioElegido;
 	
 	private List<Bien> listaBienes;
 	
@@ -49,7 +51,7 @@ public class BeanReservas implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		listaReserva=mReservas.findAllReservas();
-		nuevaReserva=mReservas.inicializarReserva();
+		
 
 	}
 	
@@ -60,7 +62,11 @@ public class BeanReservas implements Serializable {
 	}
 	public String actionMenuReserva() {
 		listaReserva=mReservas.findAllReservas();
-		nuevaReserva=new Reserva();
+		listaUsuarios = mSeguridades.findAllUsuarios();
+		listaBienes = mReservas.findAllBienes();
+		nuevaReserva= new Reserva();
+		bienElegido = "";
+		usuarioElegido = "";
 		return "reservas";
 	}
 	
@@ -86,8 +92,24 @@ public class BeanReservas implements Serializable {
 	}
 	public void actionListenerInsertarReserva() {
 		try {
-			mReservas.insertarReserva(beanSeagLogin.getLoginDTO(), nuevaReserva);
-			JSFUtil.crearMensajeINFO("Reserva creado");
+			if (bienElegido!=""&&usuarioElegido!="") {
+				for (Bien bien : listaBienes) {
+					if (bien.getBienId()==Integer.parseInt(bienElegido) ) {
+						nuevaReserva.setBien(bien);
+						break;
+					}
+				}
+				for (SegUsuario usuario : listaUsuarios) {
+					if (usuario.getIdSegUsuario()==Integer.parseInt(usuarioElegido) ) {
+						nuevaReserva.setSegUsuario(usuario);
+						break;
+					}
+				}
+			}
+			
+			nuevaReserva.setFechaReserva(new Date());
+			mReservas.insertarReserva(beanSeagLogin.getLoginDTO(),nuevaReserva);
+			JSFUtil.crearMensajeINFO("Reserva creada");
 			nuevaReserva=mReservas.inicializarReserva();
 			listaReserva=mReservas.findAllReservas();
 		} catch (Exception e) {
@@ -144,6 +166,18 @@ public class BeanReservas implements Serializable {
 	}
 	public void setListaBienes(List<Bien> listaBienes) {
 		this.listaBienes = listaBienes;
+	}
+	public String getBienElegido() {
+		return bienElegido;
+	}
+	public void setBienElegido(String bienElegido) {
+		this.bienElegido = bienElegido;
+	}
+	public String getUsuarioElegido() {
+		return usuarioElegido;
+	}
+	public void setUsuarioElegido(String usuarioElegido) {
+		this.usuarioElegido = usuarioElegido;
 	}
 
 	

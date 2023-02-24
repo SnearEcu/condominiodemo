@@ -31,37 +31,44 @@
 	<p:panel>
 		<h:form>
 			<p:panelGrid columns="2">
-				<h:outputText value="Usuario:" />
-				<p:selectOneMenu style="width:150px">
-					<f:selectItem itemLabel="Elija un usuario"
-						itemValue="#{beanPagos.nuevoPago.segUsuario}"
-						noSelectionOption="false" />
-					<f:selectItems value="#{beanPagos.listaUsuarios}" var="usuario"
-						itemLabel="#{usuario.nombres}" />
-					<p:ajax update="ValoresPendientes"
-						listener="#{beanPagos.actionListenerAlicuotasPendientes()}"></p:ajax>
-				</p:selectOneMenu>
+				<div class="card">
+					<h:outputText value="Usuario:" />
+					<p:selectOneMenu style="width:150px">
+						<f:selectItem itemLabel="Elija un usuario"
+							itemValue="#{beanPagos.nuevoPago.segUsuario}"
+							noSelectionOption="false" />
+						<f:selectItems value="#{beanPagos.listaUsuarios}" var="usuario"
+							itemLabel="#{usuario.nombres}" />
+						<p:ajax update="ValoresPendientes"
+							listener="#{beanPagos.actionListenerAlicuotasPendientes()}"></p:ajax>
+					</p:selectOneMenu>
+				</div>
+				<div class="card">
+					<h:outputText value="Total a Pagar:" />
+					<h:outputLabel id="subTotalAlicuota"
+						value="#{beanPagos.subTotalAlicuotas}" />
+					<p:commandButton type="button" value="Submit" icon="pi pi-check" />
+				</div>
 			</p:panelGrid>
 		</h:form>
 	</p:panel>
-	<h:form id="ValoresPendientes">
-		<p:panel header="Valores Pendientes">
+	<p:panel id="ValoresPendientes" header="Valores Pendientes">
+		<h:form id="AlicuotasPendientes">
 			<div class="card">
 				<h3>Alicuotas</h3>
 				Valor:
 				<h:outputLabel id="subTotalAlicuota"
 					value="#{beanPagos.subTotalAlicuotas}" />
-				<p:dataTable widgetVar="dtProducts" var="alicuota"
-					value="#{beanPagos.alicuotasPendientes}" reflow="true"
-					styleClass="products-table"
+				<p:dataTable var="alicuota" value="#{beanPagos.alicuotasPendientes}"
+					reflow="true" styleClass="products-table"
 					selection="#{beanPagos.alicuotasPorPagar}" rowKey="#{alicuota}"
 					rows="10" rowSelectMode="add" paginatorPosition="bottom">
 					<p:ajax event="rowSelectCheckbox"
-						update="ValoresPendientes:subTotalAlicuota"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="AlicuotasPendientes:subTotalAlicuota"
+						listener="#{beanPagos.actionListenerCalcularAlicuotas()}" />
 					<p:ajax event="rowUnselectCheckbox"
-						update="ValoresPendientes:subTotalAlicuota"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="AlicuotasPendientes:subTotalAlicuota"
+						listener="#{beanPagos.actionListenerCalcularAlicuotas()}" />
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center" />
 					<p:column headerText="Id">
@@ -77,22 +84,23 @@
 					</p:column>
 				</p:dataTable>
 			</div>
+		</h:form>
+		<h:form id="MultasPendientes">
 			<div class="card">
 				<h3>Multas</h3>
 				Valor:
 				<h:outputLabel id="subTotalMulta"
 					value="#{beanPagos.subTotalMultas}" />
-				<p:dataTable widgetVar="dtProducts" var="multa"
-					value="#{beanPagos.multasPendientes}" reflow="true"
-					styleClass="products-table"
-					selection="#{beanPagos.multasPorPagar}" rowKey="#{multa}"
-					rows="10" rowSelectMode="add" paginatorPosition="bottom">
+				<p:dataTable var="multa" value="#{beanPagos.multasPendientes}"
+					reflow="true" styleClass="products-table"
+					selection="#{beanPagos.multasPorPagar}" rowKey="#{multa}" rows="10"
+					rowSelectMode="add" paginatorPosition="bottom">
 					<p:ajax event="rowSelectCheckbox"
-						update="ValoresPendientes:subTotalMulta"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="MultasPendientes:subTotalMulta"
+						listener="#{beanPagos.actionListenerCalcularMultas()}" />
 					<p:ajax event="rowUnselectCheckbox"
-						update="ValoresPendientes:subTotalMulta"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="MultasPendientes:subTotalMulta"
+						listener="#{beanPagos.actionListenerCalcularMultas()}" />
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center" />
 					<p:column headerText="Id">
@@ -108,22 +116,23 @@
 					</p:column>
 				</p:dataTable>
 			</div>
-			<div class="card">
+		</h:form>
+		<h:form id="ServiciosPendientes">
+			<div id="Servicios" class="card">
 				<h3>Servicios</h3>
 				Valor:
 				<h:outputLabel id="subTotalServicio"
 					value="#{beanPagos.subTotalServicios}" />
-				<p:dataTable widgetVar="dtProducts" var="servicio"
-					value="#{beanPagos.serviciosPendientes}" reflow="true"
-					styleClass="products-table"
+				<p:dataTable var="servicio" value="#{beanPagos.serviciosPendientes}"
+					reflow="true" styleClass="products-table"
 					selection="#{beanPagos.serviciosPorPagar}" rowKey="#{servicio}"
 					rows="10" rowSelectMode="add" paginatorPosition="bottom">
 					<p:ajax event="rowSelectCheckbox"
-						update="ValoresPendientes:subTotalServicio"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="ServiciosPendientes:subTotalServicio"
+						listener="#{beanPagos.actionListenerCalcularServicios()}" />
 					<p:ajax event="rowUnselectCheckbox"
-						update="ValoresPendientes:subTotalServicio"
-						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+						update="ServiciosPendientes:subTotalServicio"
+						listener="#{beanPagos.actionListenerCalcularServicios()}" />
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center" />
 					<p:column headerText="Id">
@@ -139,9 +148,8 @@
 					</p:column>
 				</p:dataTable>
 			</div>
-		</p:panel>
-	</h:form>
-
+		</h:form>
+	</p:panel>
 
 
 

@@ -229,17 +229,25 @@ public class BeanPagos implements Serializable {
 		
 	}
 
-	public void actionListenerCalcularSubtotales () {
+	public void actionListenerCalcularAlicuotas () {
 		subTotalAlicuotas=0;
 		for (Alicuota alicuota : alicuotasPorPagar) {
 			System.out.println("alicuota:"+multasPorPagar.size());
 			subTotalAlicuotas+=alicuota.getValorAlicuota();
 		}
+		
+	}
+	public void actionListenerCalcularMultas () {
+
 		subTotalMultas=0;
 		for (Multa multa : multasPorPagar) {
 			System.out.println("multas:"+multasPorPagar.size());
 			subTotalMultas+=multa.getValorMulta();
 		}
+
+	}
+	public void actionListenerCalcularServicios () {
+
 		subTotalServicios=0;
 		for (Servicio servicio : serviciosPorPagar) {
 			System.out.println("servicios:"+multasPorPagar.size());
@@ -248,6 +256,8 @@ public class BeanPagos implements Serializable {
 	}
 	
 	
+	
+
 	public List<Pago> getListaPagos() {
 		return listaPagos;
 	}

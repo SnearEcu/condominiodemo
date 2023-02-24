@@ -55,8 +55,16 @@ public class ManagerReservas {
     	return reserva;
     }
     public void insertarReserva(LoginDTO loginDTO,Reserva nuevaReserva) throws Exception{
+    	if(nuevaReserva.getFechaFin()==null||nuevaReserva.getFechaInicio()==null||nuevaReserva.getFechaReserva()==null)
+    		throw new Exception("Elija una fecha valida porfavor.");
+    	if(nuevaReserva.getFechaInicio().before(nuevaReserva.getFechaReserva()))
+    		throw new Exception("La fecha de inicio debe ser posterior a la fecha actual.");
     	if(nuevaReserva.getFechaFin().before(nuevaReserva.getFechaInicio()))
     		throw new Exception("La fecha de fin debe ser posterior a la fecha de inicio.");
+    	if(nuevaReserva.getSegUsuario()==null)
+    		throw new Exception("Elija un usuario porfavor");
+    	if(nuevaReserva.getBien()==null)
+    		throw new Exception("Elija un bien porfavor porfavor");
     	mDAO.insertar(nuevaReserva);
     	mAuditoria.mostrarLog(loginDTO,getClass(), "insertarReserva", "Reserva de "+nuevaReserva.getBien()+" insertada exitosamente.");
     }

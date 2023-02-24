@@ -32,20 +32,18 @@
 		<h:form id="formdatos">
 			<p:panelGrid columns="4">
 				<h:outputText value="Usuario:" />
-				<p:selectOneMenu style="width:150px">
-					<f:selectItem itemLabel="Elija un usuario"
-						itemValue="#{beanReservas.nuevaReserva.segUsuario}"
-						noSelectionOption="false" />
-					<f:selectItems value="#{beanPagos.listaUsuarios}" var="usuario"
-						itemLabel="#{usuario.nombres} #{usuario.apellidos}" />
+				<p:selectOneMenu style="width:200px" value="#{beanReservas.usuarioElegido}" >
+					<f:selectItem itemLabel="Seleccione usuario..."
+							noSelectionOption="true"/>
+					<f:selectItems value="#{beanReservas.listaUsuarios}" var="usuario"
+						itemLabel="#{usuario.nombres} #{usuario.apellidos}" itemValue="#{usuario.idSegUsuario}" />
 				</p:selectOneMenu>
 				<h:outputText value="Bien:" />
-				<p:selectOneMenu style="width:150px">
-					<f:selectItem itemLabel="Elija un bien" value="#{beanReservas.nuevaReserva.bien}"
-						itemValue="#{bien}"
+				<p:selectOneMenu style="width:150px" value="#{beanReservas.bienElegido}">
+					<f:selectItem itemLabel="Elija un bien" 
 						noSelectionOption="false" />
 					<f:selectItems value="#{beanReservas.listaBienes}" var="bien"
-						itemLabel="#{bien.nombreBien}" />
+						itemLabel="#{bien.nombreBien}" itemValue="#{bien.bienId}"/>
 				</p:selectOneMenu>
 				<h:outputText value="Fecha Inicio:" />
 				<p:datePicker  value="#{beanReservas.nuevaReserva.fechaInicio}"
