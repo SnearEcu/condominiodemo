@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Pagos</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<h:form id="formdatos">
+			<p:panelGrid columns="4">
+				<h:outputText value="Usuario:" />
+				<p:selectOneMenu style="width:150px">
+					<f:selectItem itemLabel="Elija un usuario"
+						itemValue="#{beanReservas.nuevaReserva.segUsuario}"
+						noSelectionOption="false" />
+					<f:selectItems value="#{beanPagos.listaUsuarios}" var="usuario"
+						itemLabel="#{usuario.nombres} #{usuario.apellidos}" />
+				</p:selectOneMenu>
+				<h:outputText value="Bien:" />
+				<p:selectOneMenu style="width:150px">
+					<f:selectItem itemLabel="Elija un bien" value="#{beanReservas.nuevaReserva.bien}"
+						itemValue="#{bien}"
+						noSelectionOption="false" />
+					<f:selectItems value="#{beanReservas.listaBienes}" var="bien"
+						itemLabel="#{bien.nombreBien}" />
+				</p:selectOneMenu>
+				<h:outputText value="Fecha Inicio:" />
+				<p:datePicker  value="#{beanReservas.nuevaReserva.fechaInicio}"
+					inline="true" showTime="true" timeInput="true" />
+				<h:outputText value="Fecha Fin:" />
+				<p:datePicker  value="#{beanReservas.nuevaReserva.fechaFin}"
+					inline="true" showTime="true" timeInput="true" />
+				<p:commandButton value="Guardar" icon="pi pi-save"
+						actionListener="#{beanReservas.actionListenerInsertarReserva()}"></p:commandButton>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+	
+
+
+
+
+</body>
+</html>

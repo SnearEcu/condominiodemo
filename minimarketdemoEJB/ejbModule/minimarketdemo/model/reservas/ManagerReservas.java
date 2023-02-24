@@ -9,6 +9,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.Bien;
 import minimarketdemo.model.core.entities.Reserva;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.core.utils.ModelUtil;
@@ -33,6 +34,9 @@ public class ManagerReservas {
     public List<Reserva> findAllReservas(){
     	return mDAO.findAll(Reserva.class);
     }
+    public List<Bien> findAllBienes(){
+    	return mDAO.findAll(Bien.class);
+    }
     public List<DTOReserva> findAllDTOReservas(){
     	List<DTOReserva> listaDTO=new ArrayList<DTOReserva>();
     	for(Reserva reserva:findAllReservas()) {
@@ -56,6 +60,9 @@ public class ManagerReservas {
     	mDAO.insertar(nuevaReserva);
     	mAuditoria.mostrarLog(loginDTO,getClass(), "insertarReserva", "Reserva de "+nuevaReserva.getBien()+" insertada exitosamente.");
     }
-    
+    public void insertarBien(LoginDTO loginDTO,Bien nuevoBien) throws Exception{
+    	mDAO.insertar(nuevoBien);
+    	mAuditoria.mostrarLog(loginDTO,getClass(), "insertarReserva", " "+nuevoBien.getNombreBien()+" insertado exitosamente.");
+    }
 
 }

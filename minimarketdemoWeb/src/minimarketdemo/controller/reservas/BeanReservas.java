@@ -11,6 +11,8 @@ import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
+import minimarketdemo.model.core.entities.Bien;
+import minimarketdemo.model.core.entities.Pago;
 import minimarketdemo.model.core.entities.Reserva;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.reservas.ManagerReservas;
@@ -19,6 +21,10 @@ import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 @Named
 @SessionScoped
 public class BeanReservas implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private ManagerReservas mReservas;
 	@EJB
@@ -27,10 +33,14 @@ public class BeanReservas implements Serializable {
 	private List<Reserva> listaReserva;
 	private List<Reserva> listaReserva2;
 
+	
+	private List<Bien> listaBienes;
+	
 	private Reserva reservaSeleccionada;
 	private List<SegUsuario> listaUsuarios;
 	private int idSegUsuarioSeleccionado;
 
+	private Bien nuevoBien;
 	@Inject
 	private BeanSegLogin beanSeagLogin;
 
@@ -42,11 +52,37 @@ public class BeanReservas implements Serializable {
 		nuevaReserva=mReservas.inicializarReserva();
 
 	}
+	
+	public String actionMenuBienes() {
+		listaBienes=mReservas.findAllBienes();
+		nuevoBien=new Bien();
+		return "bienes";
+	}
+	public String actionMenuReserva() {
+		listaReserva=mReservas.findAllReservas();
+		nuevaReserva=new Reserva();
+		return "reservas";
+	}
+	
+	
+	
+	
 	public List<Reserva> getListaReservas() {
 		return listaReserva2;
 	}
 	public void setListaReserva(List<Reserva> listaReserva2) {
 		this.listaReserva2 = listaReserva2;
+	}
+	public void actionListenerInsertarNuevoBien() {
+		try {
+			mReservas.insertarBien(beanSeagLogin.getLoginDTO(),nuevoBien);
+			listaBienes=mReservas.findAllBienes();
+			nuevoBien=new Bien();
+			JSFUtil.crearMensajeINFO("Pago realizado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	public void actionListenerInsertarReserva() {
 		try {
@@ -96,6 +132,18 @@ public class BeanReservas implements Serializable {
 	}
 	public List<Reserva> getListaReserva() {
 		return listaReserva;
+	}
+	public Bien getNuevoBien() {
+		return nuevoBien;
+	}
+	public void setNuevoBien(Bien nuevoBien) {
+		this.nuevoBien = nuevoBien;
+	}
+	public List<Bien> getListaBienes() {
+		return listaBienes;
+	}
+	public void setListaBienes(List<Bien> listaBienes) {
+		this.listaBienes = listaBienes;
 	}
 
 	

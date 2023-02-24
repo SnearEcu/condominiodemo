@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Pagos</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<h:form>
+			<p:panelGrid columns="2">
+				<h:outputText value="Usuario:" />
+				<p:selectOneMenu style="width:150px">
+					<f:selectItem itemLabel="Elija un usuario"
+						itemValue="#{beanPagos.nuevoPago.segUsuario}"
+						noSelectionOption="false" />
+					<f:selectItems value="#{beanPagos.listaUsuarios}" var="usuario"
+						itemLabel="#{usuario.nombres}" />
+					<p:ajax update="ValoresPendientes"
+						listener="#{beanPagos.actionListenerAlicuotasPendientes()}"></p:ajax>
+				</p:selectOneMenu>
+			</p:panelGrid>
+		</h:form>
+	</p:panel>
+	<h:form id="ValoresPendientes">
+		<p:panel header="Valores Pendientes">
+			<div class="card">
+				<h3>Alicuotas</h3>
+				Valor:
+				<h:outputLabel id="subTotalAlicuota"
+					value="#{beanPagos.subTotalAlicuotas}" />
+				<p:dataTable widgetVar="dtProducts" var="alicuota"
+					value="#{beanPagos.alicuotasPendientes}" reflow="true"
+					styleClass="products-table"
+					selection="#{beanPagos.alicuotasPorPagar}" rowKey="#{alicuota}"
+					rows="10" rowSelectMode="add" paginatorPosition="bottom">
+					<p:ajax event="rowSelectCheckbox"
+						update="ValoresPendientes:subTotalAlicuota"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:ajax event="rowUnselectCheckbox"
+						update="ValoresPendientes:subTotalAlicuota"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="Id">
+						<h:outputText value="#{alicuota.aliId}" />
+					</p:column>
+
+					<p:column headerText="Periodo">
+						<h:outputText value="#{alicuota.periodo}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{alicuota.valorAlicuota}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			<div class="card">
+				<h3>Multas</h3>
+				Valor:
+				<h:outputLabel id="subTotalMulta"
+					value="#{beanPagos.subTotalMultas}" />
+				<p:dataTable widgetVar="dtProducts" var="multa"
+					value="#{beanPagos.multasPendientes}" reflow="true"
+					styleClass="products-table"
+					selection="#{beanPagos.multasPorPagar}" rowKey="#{multa}"
+					rows="10" rowSelectMode="add" paginatorPosition="bottom">
+					<p:ajax event="rowSelectCheckbox"
+						update="ValoresPendientes:subTotalMulta"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:ajax event="rowUnselectCheckbox"
+						update="ValoresPendientes:subTotalMulta"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="Id">
+						<h:outputText value="#{multa.multId}" />
+					</p:column>
+
+					<p:column headerText="Tipo multa">
+						<h:outputText value="#{multa.tipoMulta}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{multa.valorMulta}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+			<div class="card">
+				<h3>Servicios</h3>
+				Valor:
+				<h:outputLabel id="subTotalServicio"
+					value="#{beanPagos.subTotalServicios}" />
+				<p:dataTable widgetVar="dtProducts" var="servicio"
+					value="#{beanPagos.serviciosPendientes}" reflow="true"
+					styleClass="products-table"
+					selection="#{beanPagos.serviciosPorPagar}" rowKey="#{servicio}"
+					rows="10" rowSelectMode="add" paginatorPosition="bottom">
+					<p:ajax event="rowSelectCheckbox"
+						update="ValoresPendientes:subTotalServicio"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:ajax event="rowUnselectCheckbox"
+						update="ValoresPendientes:subTotalServicio"
+						listener="#{beanPagos.actionListenerCalcularSubtotales()}" />
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="Id">
+						<h:outputText value="#{servicio.servId}" />
+					</p:column>
+
+					<p:column headerText="Tipo servicio">
+						<h:outputText value="#{servicio.tipoServicio.nombreServicio}" />
+					</p:column>
+
+					<p:column headerText="Valor">
+						<h:outputText value="#{servicio.valorServicio}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</p:panel>
+	</h:form>
+
+
+
+
+</body>
+</html>

@@ -9,11 +9,11 @@
 		<class>minimarketdemo.model.core.entities.Multa</class>
 		<class>minimarketdemo.model.core.entities.Pago</class>
 		<class>minimarketdemo.model.core.entities.Reserva</class>
-		<class>minimarketdemo.model.core.entities.SegAsignacion</class>
-		<class>minimarketdemo.model.core.entities.SegModulo</class>
 		<class>minimarketdemo.model.core.entities.SegPerfil</class>
 		<class>minimarketdemo.model.core.entities.SegUsuario</class>
 		<class>minimarketdemo.model.core.entities.Servicio</class>
+		<class>minimarketdemo.model.core.entities.SegModulo</class>
+		<class>minimarketdemo.model.core.entities.SegAsignacion</class>
 		<class>minimarketdemo.model.core.entities.TipoServicio</class>
 		<class>minimarketdemo.model.core.entities.Vehiculo</class>
 		<class>minimarketdemo.model.core.entities.Vivienda</class>

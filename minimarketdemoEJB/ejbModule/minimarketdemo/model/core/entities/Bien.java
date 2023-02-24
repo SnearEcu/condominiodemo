@@ -27,7 +27,7 @@ public class Bien implements Serializable {
 	private String nombreBien;
 
 	//bi-directional many-to-one association to Reserva
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "bien")
+	@OneToMany(mappedBy="bien")
 	private List<Reserva> reservas;
 
 	public Bien() {
